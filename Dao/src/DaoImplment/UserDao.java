@@ -8,21 +8,11 @@ import java.util.List;
 import dao.DaoBase;
 import vo.User;
 
-public class UserDao {
-	private static DaoBase daobase;
-	private Connection con;
-    private PreparedStatement state;    //当以数据库操作对象
+public class UserDao extends DaoBase {
 	
-    public UserDao()
+    public UserDao() throws Exception
     {
-    	try {
-			daobase=new DaoBase();    	
-			con=daobase.getConnection();
-			state=null;
-		} catch (Exception e) {
-			System.out.println("数据库连接出错！！！");
-			e.printStackTrace();
-		}
+    	super();
     }
     
     //查出所有用户

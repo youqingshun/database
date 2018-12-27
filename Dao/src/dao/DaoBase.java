@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 public class DaoBase implements Dao{
 
@@ -14,8 +15,12 @@ public class DaoBase implements Dao{
     //定义数据库连接指令
     private static final String DBPASS = "123456";
     
+  //声明数据库连接对象
+    protected Connection con= null;
+    protected PreparedStatement state;    //当以数据库操作对象
+    
     //声明数据库连接对象
-    Connection con = null;
+    //Connection con = null;
     
     //定义构造方法，并实例化数据库连接对象
     public DaoBase() throws Exception {

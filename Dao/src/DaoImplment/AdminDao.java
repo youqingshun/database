@@ -10,13 +10,11 @@ import vo.Admin;
 
 public class AdminDao extends DaoBase{
 //	private static DaoBase daobase;
-	private Connection con;
-    private PreparedStatement state;    //当以数据库操作对象
+	
 	
     public AdminDao() throws Exception
     {
     	super();
-    	con=getConnection();
     }
     
     //查出所有用户
