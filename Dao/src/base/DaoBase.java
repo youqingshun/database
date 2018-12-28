@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,10 +64,11 @@ public abstract class DaoBase implements Dao{
     }
     
     
-public abstract List<Vobase> getVos() ;
+public abstract List<Vobase> getVos() throws SQLException ;
     //增
-public abstract boolean add(Vobase vo);
+public abstract boolean add(Vobase vo) throws Exception;
 
+//需要说明一下的是，下面三个remove看起来多，其实是第三个调用第二个，第二个调用第一个而已
 	//删
 public boolean remove(int id,String table,String idname) throws Exception {
      
@@ -89,6 +91,7 @@ public boolean remove(int id,String table) throws Exception {
 
 public abstract boolean remove(int id) ;
 
+//下面三个search和上面三个remove一样
 	//查
 public ResultSet search(int id,String table,String idname) throws Exception {
         User user = null;        //接受查询返回的对象
@@ -111,8 +114,8 @@ public ResultSet search(int id,String table) throws Exception {
 	
 public abstract ResultSet search(int id);
 
-	//改
-   public abstract boolean update(Vobase vo) throws Exception ;
+//改
+public abstract boolean update(Vobase vo) throws Exception ;
     
     
 }

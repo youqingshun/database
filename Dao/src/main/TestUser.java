@@ -2,18 +2,19 @@ package main;
 
 import java.util.List;
 import DaoImplment.UserDao;
+import base.Vobase;
 import vo.User;
 
 public class TestUser {
 
     public static void main(String args[]) throws Exception {
         
-        List<User> list = null;
+        List<Vobase> list = null;
         UserDao userdao=new UserDao();      //遍历
         System.out.println("1111111111111");
-        list=userdao.getUsers();   
+        list=userdao.getVos();   
         for(int i=0;i<list.size();i++)
-        	System.out.println(list.get(i).getName());
+        	System.out.println(((User) list.get(i)).getName());
         
         ///////////////////////////////////增 
         System.out.println("2222222222");
@@ -31,17 +32,17 @@ public class TestUser {
         boolean flag= userdao.add(user);         
         System.out.println("插入是否成功:"+flag);
        
-        list=userdao.getUsers();   
+        list=userdao.getVos();   
        for(int i=0;i<list.size();i++)
-        	System.out.println(list.get(i).getName());
+        	System.out.println(((User) list.get(i)).getName());
         
         /////////////////////////////////// //改
         System.out.println("33333333333333");       
         user.setName("寥寥"); 
         userdao.update(user);   
-        list=userdao.getUsers();   
+        list=userdao.getVos();   
         for(int i=0;i<list.size();i++)
-        	System.out.println(list.get(i).getName());
+        	System.out.println(((User) list.get(i)).getName());
         
         /////////////////////////////////// //查
         System.out.println("444444444"); 
@@ -54,9 +55,9 @@ public class TestUser {
         System.out.println("555555555"); 
         userdao.remove("user4");      
         
-        list=userdao.getUsers();   
+        list=userdao.getVos();   
         for(int i=0;i<list.size();i++)
-        	System.out.println(list.get(i).getName());
+        	System.out.println(((User) list.get(i)).getName());
         
     }
 }

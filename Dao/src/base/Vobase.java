@@ -12,6 +12,8 @@ public class Vobase {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	
 	
 	
 }
