@@ -1,8 +1,8 @@
 package vo;              //vo即为(Value Object 值对象 )
 
-import base.vobase;
+import base.Vobase;
 
-public class User extends vobase {
+public class User extends Vobase {
 	
     String no;        //账号
     String pwd;         

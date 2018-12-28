@@ -1,9 +1,9 @@
 package base;
 
-public class vobase {
+public class Vobase {
 	protected int id;
 	
-	public vobase() {}
+	public Vobase() {}
 
 	public int getId() {
 		return id;
