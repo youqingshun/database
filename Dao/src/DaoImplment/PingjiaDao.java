@@ -4,7 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import dao.DaoBase;
+
+import base.DaoBase;
 import vo.Pingjia;
 
 public class PingjiaDao extends DaoBase {

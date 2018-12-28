@@ -1,4 +1,5 @@
 package DaoImplment;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,42 +8,41 @@ import java.util.Date;
 import java.util.List;
 
 import base.DaoBase;
+import vo.Blog;
 import vo.User;
 
-public class UserDao extends DaoBase {
+public class BlogDao extends DaoBase {
 	
-    public UserDao() throws Exception
+    public BlogDao() throws Exception
     {
     	super();
     }
     
     //查出所有用户
-    public List<User> getUsers() throws Exception {
+    public List<Blog> getBlogs() throws Exception {
         
         //保存所有对象
-        List<User> list = new ArrayList<User>();
+        List<Blog> list = new ArrayList<Blog>();
         //保存返回的的查询结果
         ResultSet rs = null;
         //定义用于查询的sql语句
-        String selectSql = " select * from t_user ";
+        String selectSql = " select * from t_blog ";
         
         this.state = this.con.prepareStatement(selectSql);
         rs = this.state.executeQuery();
         
         while( rs.next() ) {
-        	User user = new User();        //实例化对象
+        	Blog blog = new Blog();        //实例化对象
+            blog.setId(rs.getInt("id"));
+        	blog.setInfos(rs.getString("infos"));
+            blog.setItid(rs.getInt("itid"));
+            blog.setPicurls(rs.getString("picurls"));
+            blog.setTime(rs.getString("time"));
+            blog.setTitle(rs.getString("title"));
+            blog.setType(rs.getString("type"));
+            blog.setZhaiyao(rs.getString("zhaiyao"));
             
-            user.setName(rs.getString("name"));
-            user.setPwd(rs.getString("pwd"));
-            user.setNo(rs.getString("no"));
-            user.setEmail(rs.getString("email"));
-            user.setTel(rs.getString("tel"));
-            user.setAge(rs.getInt("age"));
-            user.setAddress(rs.getString("address"));
-            user.setBirth(rs.getString("birth"));
-            user.setRole(rs.getString("role"));
-            
-            list.add(user);            //加入集合
+            list.add(blog);            //加入集合
         }
         
         this.state.close();        //关闭连接

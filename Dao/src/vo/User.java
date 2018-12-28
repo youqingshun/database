@@ -1,7 +1,9 @@
 package vo;              //vo即为(Value Object 值对象 )
 
-public class User {
-	int id;
+import base.vobase;
+
+public class User extends vobase {
+	
     String no;        //账号
     String pwd;         
     String name;    
@@ -47,13 +49,7 @@ public class User {
 		return no;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 
 	public void setNo(String no) {
 		this.no = no;

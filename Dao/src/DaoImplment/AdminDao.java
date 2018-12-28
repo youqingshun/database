@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import dao.DaoBase;
+
+import base.DaoBase;
 import vo.Admin;
 
 public class AdminDao extends DaoBase{
