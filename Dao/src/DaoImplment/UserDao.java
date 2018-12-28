@@ -213,6 +213,33 @@ public class UserDao extends DaoBase {
         return flag;
     }
 
+    
+	public User search(int id) throws Exception {
+		// TODO Auto-generated method stub
+		User user = null;        //接受查询返回的对象
+        ResultSet rs = null;        //接受查询结果
+        //id不为空，且不为""
+        if( id!=-1 ) {        
+            //定义用于查询的sql语句
+		            rs = search(id,"t_user");
+		            //查询成功
+		            if( rs.next() ) {
+		                user = new User();        //实例化Worker类对象
+		                user.setName(rs.getString("name"));
+		                user.setPwd(rs.getString("pwd"));
+		                user.setNo(rs.getString("no"));
+		                user.setEmail(rs.getString("email"));
+		                user.setTel(rs.getString("tel"));
+		                user.setAge(rs.getInt("age"));
+		                user.setAddress(rs.getString("address"));
+		                user.setBirth(rs.getString("birth"));
+		                user.setRole(rs.getString("role"));
+		            }
+		            this.state.close();        //关闭连接
+        }
+        return user;
+	}
+
 	@Override
 	public boolean remove(int id) {
 		try {
@@ -225,16 +252,4 @@ public class UserDao extends DaoBase {
 		return false;
 	}
 
-//	@Override
-//	public ResultSet search(int id) {
-//		// TODO Auto-generated method stub
-//		try {
-//			return search(id,"t_user");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		return null;
-//	}
 }

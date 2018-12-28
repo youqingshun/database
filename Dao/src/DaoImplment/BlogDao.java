@@ -53,6 +53,12 @@ public class BlogDao extends DaoBase {
 
     }
     
+    public List<Blog> getBlog() throws SQLException
+    {
+    	List list=getVos();
+    	List list2=(List<Blog>)list;
+    	return list2;
+    }
     //增
 	public boolean add(Vobase vo) throws Exception{
 		System.out.println("add");
@@ -96,6 +102,9 @@ public class BlogDao extends DaoBase {
         return false;        //返回判断标志
 	}
 
+
+	
+	
 	//删
 	public boolean remove(int id) throws Exception {
      

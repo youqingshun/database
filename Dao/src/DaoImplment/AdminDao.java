@@ -13,7 +13,7 @@ import vo.Admin;
 
 public class AdminDao extends DaoBase{
 //	private static DaoBase daobase;
-	
+	//函数有增删查改以及id版的查和删
 	
     public AdminDao() throws Exception
     {
@@ -169,22 +169,34 @@ public class AdminDao extends DaoBase{
         return flag;
     }
 
+    
+    public Admin search(int id) throws Exception {
+		Admin admin = null;        //接受查询返回的对象
+        ResultSet rs = null;        //接受查询结果
+        rs= search(id,"t_admin");
+		
+      //查询成功
+        if( rs.next() ) {
+            
+            admin = new Admin();        //实例化对象
+            admin.setName(rs.getString("name"));
+            admin.setPwd(rs.getString("pwd"));
+            admin.setEmail(rs.getString("email"));
+            admin.setTel(rs.getString("tel"));
+            admin.setId(rs.getInt("id"));
+        }
+        
+        this.state.close();        //关闭连接
+		return admin;
+	}
+    
 	@Override
 	public boolean remove(int id) throws Exception {
 		// TODO Auto-generated method stub
-		
-		
 			return remove(id,"t_admin");
-		
-		
 	}
 
 //	@Override
-//	public ResultSet search(int id) throws Exception {
-//		
-//			return search(id,"t_admin");
-//		
-//		
-//	}
+	
 	
 }

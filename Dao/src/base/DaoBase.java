@@ -65,6 +65,7 @@ public abstract class DaoBase implements Dao{
     
     
 public abstract List<Vobase> getVos() throws SQLException ;
+
     //Ôö
 public abstract boolean add(Vobase vo) throws Exception;
 
