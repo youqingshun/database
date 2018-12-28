@@ -2,10 +2,12 @@ package DaoImplment;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import base.DaoBase;
+import base.Vobase;
 import vo.Pingjia;
 
 public class PingjiaDao extends DaoBase {
@@ -16,43 +18,49 @@ public class PingjiaDao extends DaoBase {
     }
     
     //查出所有信息
-    public List<Pingjia> getAdmin() throws Exception {
+    public List<Vobase> getVos() {
         
         //保存所有对象
-        List<Pingjia> list = new ArrayList<Pingjia>();
+        List<Vobase> list = new ArrayList<Vobase>();
         //保存返回的的查询结果
         ResultSet rs = null;
         //定义用于查询的sql语句
         String selectSql = " select * from t_pingjia ";
         
-        this.state = this.con.prepareStatement(selectSql);
-        rs = this.state.executeQuery();
+        try {
+			this.state = this.con.prepareStatement(selectSql);
+			rs = this.state.executeQuery();
+	        
+	        while( rs.next() ) {
+	        	Pingjia pingjia = new Pingjia();        //实例化对象
+	            
+	        	pingjia.setInfos(rs.getString("infos"));
+	        	pingjia.setId(rs.getInt("id"));
+	        	pingjia.setName(rs.getString("name"));
+	            pingjia.setGrade(rs.getInt("grade"));
+	            pingjia.setAddtime(rs.getString("addtime"));
+	            pingjia.setUid(rs.getInt("uid"));
+	            pingjia.setItid(rs.getInt("itid"));
+	            pingjia.setType(rs.getString("type"));
+	        	
+	            list.add(pingjia);            //加入集合
+	        }
+	        
+	        this.state.close();        //关闭连接
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
-        while( rs.next() ) {
-        	Pingjia pingjia = new Pingjia();        //实例化对象
-            
-        	pingjia.setInfos(rs.getString("infos"));
-        	pingjia.setId(rs.getInt("id"));
-        	pingjia.setName(rs.getString("name"));
-            pingjia.setGrade(rs.getInt("grade"));
-            pingjia.setAddtime(rs.getString("addtime"));
-            pingjia.setUid(rs.getInt("uid"));
-            pingjia.setItid(rs.getInt("itid"));
-            pingjia.setType(rs.getString("type"));
-        	
-            list.add(pingjia);            //加入集合
-        }
-        
-        this.state.close();        //关闭连接
         
         return list;            //返回集合
 
     }
     
     //增（检查外键）
-	public boolean add(Pingjia pingjia) throws Exception{
+	public boolean add(Vobase vo) throws Exception{
 		System.out.println("add");
-		
+		Pingjia pingjia=(Pingjia)vo;
         //外键约束检验
         String temp="select * from t_user where id=? ";
         this.state=this.con.prepareStatement(temp);
@@ -96,16 +104,8 @@ public class PingjiaDao extends DaoBase {
 	//删
 	public boolean remove(int id) throws Exception {
      
-        boolean flag = false;    //判断是否删除成功
-        //定义用于删除的sql语句
-        String removeSql = " delete from t_pingjia where id = ? ";
-        this.state = this.con.prepareStatement(removeSql);
-        this.state.setInt(1, id); 
-        if( this.state.executeUpdate() > 0 ) {        //删除成功
-            flag = true;
-        }
-        this.state.close();        //关闭连接
-        return flag;
+        
+        return remove(id,"t_pingjia");
     }
 
 	//查
@@ -144,9 +144,9 @@ public class PingjiaDao extends DaoBase {
     }
 
 	//改(不能改外键)
-    public boolean update(Pingjia pingjia) throws Exception {
+    public boolean update(Vobase vo) throws Exception {
         boolean flag = false;        //标记是否更新成功
-        
+        Pingjia pingjia=(Pingjia)vo;
         if( pingjia != null ) {
             
             //定义更新语句
@@ -168,4 +168,6 @@ public class PingjiaDao extends DaoBase {
         }
         return flag;
     }
+
+
 }

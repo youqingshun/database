@@ -225,16 +225,16 @@ public class UserDao extends DaoBase {
 		return false;
 	}
 
-	@Override
-	public ResultSet search(int id) {
-		// TODO Auto-generated method stub
-		try {
-			return search(id,"t_user");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
+//	@Override
+//	public ResultSet search(int id) {
+//		// TODO Auto-generated method stub
+//		try {
+//			return search(id,"t_user");
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		return null;
+//	}
 }

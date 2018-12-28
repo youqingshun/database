@@ -3,11 +3,13 @@ package DaoImplment;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import base.DaoBase;
+import base.Vobase;
 import vo.Blog;
 import vo.User;
 
@@ -19,10 +21,10 @@ public class BlogDao extends DaoBase {
     }
     
     //查出所有用户
-    public List<Blog> getBlogs() throws Exception {
+    public List<Vobase> getVos() throws SQLException {
         
         //保存所有对象
-        List<Blog> list = new ArrayList<Blog>();
+        List<Vobase> list = new ArrayList<Vobase>();
         //保存返回的的查询结果
         ResultSet rs = null;
         //定义用于查询的sql语句
@@ -52,13 +54,13 @@ public class BlogDao extends DaoBase {
     }
     
     //增
-	public boolean add(User user) throws Exception{
+	public boolean add(Vobase vo) throws Exception{
 		System.out.println("add");
-		
+		Blog blog=(Blog)vo;
         //如果数据库中不存在相同id的员工，则可插入数据
-        String temp="select * from t_user where no=? ";
+        String temp="select * from t_blog where id=? ";
         this.state=this.con.prepareStatement(temp);
-        this.state.setString(1, user.getNo());/*
+        this.state.setLong(1, blog.getId());/*
         this.state.setString(2, user.getTel());
         this.state.setString(3, user.getName());*/
         ResultSet rs = state.executeQuery();        //接受查询结果
@@ -66,23 +68,22 @@ public class BlogDao extends DaoBase {
         	return false;
         
         
-        if( user != null ) {
+        if( blog != null ) {
             
             //定义插入的sql语句
-            String insertSql = " insert into t_user(no,pwd,name,email,tel,age,birth,role,address) "
-                    + " values(?,?,?,?,?,?,?,?,?) ";
+            String insertSql = " insert into t_blog(id,title,infos,time,itid,type,zhaiyao,picurls) "
+                    + " values(?,?,?,?,?,?,?,?) ";
             
             //取得操作数据库的对象
             this.state = this.con.prepareStatement(insertSql);
-            this.state.setString(1, user.getNo());
-            this.state.setString(2, user.getPwd());
-            this.state.setString(3, user.getName());
-            this.state.setString(4, user.getEmail());
-            this.state.setString(5, user.getTel());
-            this.state.setInt(6, user.getAge());
-            this.state.setString(7, user.getBirth());
-            this.state.setString(8, user.getRole());
-            this.state.setString(9, user.getAddress());
+            this.state.setInt(1, blog.getId());
+            this.state.setString(2, blog.getTitle());
+            this.state.setString(3, blog.getInfos());
+            this.state.setString(4, blog.getTime());
+            this.state.setInt(5, blog.getItid());
+            this.state.setString(6, blog.getType());
+            this.state.setString(7, blog.getZhaiyao());
+            this.state.setString(8, blog.getPicurls());
             
             
             if( this.state.executeUpdate() > 0 ) {        //成功插入数据
@@ -96,65 +97,50 @@ public class BlogDao extends DaoBase {
 	}
 
 	//删
-	public boolean remove(String no) throws Exception {
+	public boolean remove(int id) throws Exception {
      
-        boolean flag = false;    //判断是否删除成功
-        //定义用于删除的sql语句
-        String removeSql = " delete from t_user where no = ? ";
-        this.state = this.con.prepareStatement(removeSql);
-        this.state.setString(1, no); 
-        if( this.state.executeUpdate() > 0 ) {        //删除成功
-            flag = true;
-        }
-        this.state.close();        //关闭连接
-        return flag;
+        return remove(id,"t_blog");
     }
 
 	//查
-	public User search(String no) throws Exception {
-        User user = null;        //接受查询返回的对象
+	public Blog search(int id) throws Exception {
+		Blog blog = null;        //接受查询返回的对象
         ResultSet rs = null;        //接受查询结果
         
         //id不为空，且不为""
-        if( no != null || "".equals(no) ) {        
+        if( id!=0 ) {        
             
             //定义用于查询的sql语句
-            String selectSql = "select * from t_user where no=? ";
-            
-            this.state = this.con.prepareStatement(selectSql);
-            this.state.setString(1, no);
-            rs = this.state.executeQuery();
+            rs=search(id,"t_blog");
             
             //查询成功
             if( rs.next() ) {
                 
-                user = new User();        //实例化Worker类对象
-                user.setName(rs.getString("name"));
-                user.setPwd(rs.getString("pwd"));
-                user.setNo(rs.getString("no"));
-                user.setEmail(rs.getString("email"));
-                user.setTel(rs.getString("tel"));
-                user.setAge(rs.getInt("age"));
-                user.setAddress(rs.getString("address"));
-                user.setBirth(rs.getString("birth"));
-                user.setRole(rs.getString("role"));
-                
+            	blog = new Blog();        //实例化Worker类对象
+                blog.setId(rs.getInt("id"));
+                blog.setInfos(rs.getString("infos"));
+                blog.setItid(rs.getInt("itid"));
+                blog.setPicurls(rs.getString("picurls"));
+                blog.setTime(rs.getString("time"));
+                blog.setTitle(rs.getString("title"));
+                blog.setType(rs.getString("type"));
+                blog.setZhaiyao(rs.getString("zhaiyao"));
             }
             
             this.state.close();        //关闭连接
         }
         
-        return user;
+        return blog;
     }
 
 	//改
-    public boolean update(User user) throws Exception {
+    public boolean update(Vobase vo) throws Exception {
         boolean flag = false;        //标记是否更新成功
-        
-        if( user != null ) {
+        Blog blog=(Blog)vo;
+        if( blog != null ) {
             
             //定义更新语句
-            String updateSql = " update t_user set pwd=?,name=?,email=?,tel=?,age=?,birth=?,role=?,address=? where no=?";
+            String updateSql = " update t_blog set id=?,title=?,infos=?,time=?,itid=?,type=?,zhaiyao=?,picurls=? where id=?";
             
             //转换日期类型：util.Date -> sql.Date
             /*Date date = user.getBirth();
@@ -162,15 +148,15 @@ public class BlogDao extends DaoBase {
 
             this.state = this.con.prepareStatement(updateSql);
 
-            this.state.setString(1, user.getPwd());
-            this.state.setString(2, user.getName());
-            this.state.setString(3, user.getEmail());
-            this.state.setString(4, user.getTel());
-            this.state.setInt(5, user.getAge());
-            this.state.setString(6, user.getBirth());
-            this.state.setString(7, user.getRole());
-            this.state.setString(8, user.getAddress());
-            this.state.setString(9, user.getNo());    
+            this.state.setInt(1, blog.getId());
+            this.state.setString(2, blog.getTitle());
+            this.state.setString(3, blog.getInfos());
+            this.state.setString(4, blog.getTime());
+            this.state.setInt(5, blog.getItid());
+            this.state.setString(6, blog.getType());
+            this.state.setString(7, blog.getZhaiyao());
+            this.state.setString(8, blog.getPicurls());
+            this.state.setInt(9, blog.getId());    
             
             if( this.state.executeUpdate() > 0 ) {        //更新成功
                 flag = true;
@@ -179,4 +165,12 @@ public class BlogDao extends DaoBase {
         }
         return flag;
     }
+
+
+
+
+
+	
+
+	
 }

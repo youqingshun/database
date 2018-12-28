@@ -89,7 +89,7 @@ public boolean remove(int id,String table) throws Exception {
     return remove(id,table,"id");
 }
 
-public abstract boolean remove(int id) ;
+public abstract boolean remove(int id) throws Exception ;
 
 //下面三个search和上面三个remove一样
 	//查
@@ -112,7 +112,7 @@ public ResultSet search(int id,String table) throws Exception {
 		return search(id,table,"id");
 	}
 	
-public abstract ResultSet search(int id);
+//public abstract ResultSet search(int id) throws Exception;
 
 //改
 public abstract boolean update(Vobase vo) throws Exception ;

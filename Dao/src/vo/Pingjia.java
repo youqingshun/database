@@ -1,7 +1,9 @@
 package vo;
 
-public class Pingjia {
-	private int id;
+import base.Vobase;
+
+public class Pingjia extends Vobase {
+//	private int id;
 	private String name;
 	private String infos;
 	private String addtime;
@@ -23,12 +25,7 @@ public class Pingjia {
 	
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}

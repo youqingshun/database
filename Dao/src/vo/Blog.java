@@ -1,7 +1,9 @@
 package vo;
 
-public class Blog {
-	private int id;
+import base.Vobase;
+
+public class Blog extends Vobase {
+//	private int id;
     private String title;        //ук╨е
     private String infos;
     private String  time;
@@ -25,13 +27,7 @@ public class Blog {
 		this.picurls = picurls;
 	}
 
-	public int getId() {
-		return id;
-	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getTitle() {
 		return title;
