@@ -39,7 +39,9 @@ public class ItemsDao extends DaoBase {
             item.setPrice(rs.getDouble("price"));
             item.setType(rs.getString("type"));
             item.setUrls(rs.getString("urls"));
-        	
+        	item.setSells(rs.getInt("sells"));
+        	item.setCategory(rs.getString("category"));
+            
             list.add(item);            //加入集合
         }
         
@@ -73,8 +75,8 @@ public class ItemsDao extends DaoBase {
         if( item != null ) {
             
             //定义插入的sql语句
-            String insertSql = " insert into t_items(name,urls,type,price,infos,brand,no,id) "
-                    + " values(?,?,?,?,?,?,?,?) ";
+            String insertSql = " insert into t_items(name,urls,type,price,infos,brand,no,id,sells,category) "
+                    + " values(?,?,?,?,?,?,?,?,?,?) ";
             
             //取得操作数据库的对象
             this.state = this.con.prepareStatement(insertSql);
@@ -87,6 +89,8 @@ public class ItemsDao extends DaoBase {
             this.state.setString(6, item.getBrand());
             this.state.setString(7, item.getNo());
             this.state.setInt(8, item.getId());
+            this.state.setInt(9, item.getSells());
+            this.state.setString(10, item.getCategory());
             
             if( this.state.executeUpdate() > 0 ) {        //成功插入数据
                 return true;
@@ -127,6 +131,8 @@ public class ItemsDao extends DaoBase {
                 blog.setNo(rs.getString("no"));
                 blog.setPrice(rs.getDouble("price"));
                 blog.setUrls(rs.getString("urls"));
+                blog.setSells(rs.getInt("sells"));
+                blog.setCategory(rs.getString("category"));
                 
             }
             
@@ -143,7 +149,7 @@ public class ItemsDao extends DaoBase {
         if( item != null ) {
             
             //定义更新语句
-            String updateSql = " update t_items set id=?,name=?,urls=?,type=?,price=?,infos=?,brand=?,no=? where id=?";
+            String updateSql = " update t_items set id=?,name=?,urls=?,type=?,price=?,infos=?,brand=?,no=?,sells=?,category=? where id=?";
             
             //转换日期类型：util.Date -> sql.Date
             /*Date date = user.getBirth();
@@ -159,7 +165,12 @@ public class ItemsDao extends DaoBase {
             this.state.setString(6, item.getInfos());
             this.state.setString(7, item.getBrand());
             this.state.setString(8, item.getNo());
-            this.state.setInt(9, item.getId());    
+            
+            this.state.setInt(9, item.getSells());
+            this.state.setString(10, item.getCategory());
+            
+            this.state.setInt(11, item.getId());    
+            
             
             if( this.state.executeUpdate() > 0 ) {        //更新成功
                 flag = true;

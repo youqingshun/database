@@ -10,9 +10,34 @@ public class Items extends Vobase {
 	private String infos;
 	private String brand;
 	private String no;
+	private int sells;
+	private String category;
 	
 	public Items() {}
-	public Items(String name, String urls, String type, double price, String infos, String brand, String no) {
+	
+	
+	public int getSells() {
+		return sells;
+	}
+
+
+	public void setSells(int sells) {
+		this.sells = sells;
+	}
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+	public Items(String name, String urls, String type, double price, String infos, String brand, String no, int sells,
+			String category) {
 		super();
 		this.name = name;
 		this.urls = urls;
@@ -21,8 +46,11 @@ public class Items extends Vobase {
 		this.infos = infos;
 		this.brand = brand;
 		this.no = no;
+		this.sells = sells;
+		this.category = category;
 	}
-	
+
+
 	public String getName() {
 		return name;
 	}

@@ -27,6 +27,8 @@ public class TestItems {
 		item.setPrice(4.4);
 		item.setType("type1");
 		item.setUrls("urls1");
+		item.setSells(11);
+		item.setCategory("category1");
 		
 		boolean flag = itemsdao.add(item);
 		System.out.println("插入是否成功:" + flag);
